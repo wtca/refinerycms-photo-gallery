@@ -15,7 +15,8 @@
                 :class=>"fancybox",
                 :data =>{:title=> t('.image') + ' ' + (index + 1 ).to_s + '/' + photos_for_page.total_pages.to_s + ' ' + photo.title + '<br/><br/>' + photo.description},
                 :rel=>"group",
-                :title=> photo.title } %>
+                :title=> photo.title,
+                :alt => photo.title } %>
       </li>
   <% end %>
 </ul>

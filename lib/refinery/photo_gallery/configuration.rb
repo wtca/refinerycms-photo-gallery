@@ -6,7 +6,7 @@ module Refinery
                     :delete_uploaded_file,:collection_dimensions, :album_dimensions, :preview_dimensions, :single_dimensions, :photo_gallery_dir_relative_to_root,
                     :photos_per_page, :albums_per_page, :collections_per_page,
                     :admin_photo_options_show_url, :admin_photo_options_show_css_class,
-                    :admin_photo_options_show_preview_type
+                    :admin_photo_options_show_preview_type, :admin_photo_options_show_lng_lat
 
 
 
@@ -33,5 +33,6 @@ module Refinery
     self.admin_photo_options_show_url = true
     self.admin_photo_options_show_css_class = true
     self.admin_photo_options_show_preview_type = true
+    self.admin_photo_options_show_lng_lat = true
   end
 end
