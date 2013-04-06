@@ -64,14 +64,40 @@
   <br>
 </form>
 
+<%= form_tag refinery.photo_gallery_admin_photos_path, id: 'single-photo-upload', multipart: true do %>
+  <%= hidden_field_tag 'photo[album_id]', @album.id %>
+
+  <%= label_tag 'file' %>
+  <%= file_field_tag 'file' %>
+  <%= submit_tag 'Upload' %>
+<% end %>
+
 <%= form_for :photos, :url => refinery.update_multiple_photo_gallery_admin_photos_path, :html => { :method => :put, :id=> "form_edit_photos"} do |f| %> <%#TODO DRY  %>
-    <div id="multiple_photo_edit"></div>
-    <div id="upload_progress">
-      <%= image_tag 'refinery/photo_gallery/admin/icons/loading.gif' %>
-    </div>
-    <div id="form_actions" >
-        <%= render :partial=> 'form_actions', :locals => {:f => f} %>
-    </div>
+  <div id="multiple_photo_edit"></div>
+  <div id="upload_progress">
+    <%= image_tag 'refinery/photo_gallery/admin/icons/loading.gif' %>
+  </div>
+  <div id="form_actions" >
+      <%= render :partial=> 'form_actions', :locals => {:f => f} %>
+  </div>
 <% end %>
 
 <br><br>
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    $("form#single-photo-upload").ajaxForm({
+      success: function(response, status, xhr){
+        if (xhr.status != 500){
+          alert(response);
+        }
+        else {
+          $('form div#multiple_photo_edit').append(response).fadeIn('slow');
+          $('form div#form_actions').fadeIn('slow');
+        }
+      }
+    });
+  });
+
+</script>
