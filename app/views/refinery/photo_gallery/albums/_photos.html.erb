@@ -1,25 +1,26 @@
 <% cache "refinery/photo_gallery/albums/#{@page.album.id}/page/#{params[:page]}" do %>
-<% photos_for_page = @page.photos_for_page(params[:page])  %>
+  <% photos_for_page = @page.photos_for_page(params[:page])  %>
 
-<%= will_paginate photos_for_page %>
+  <%= will_paginate photos_for_page %>
 
-<ul id="gallery" class="clearfix">
-  <% photos_for_page.each_with_index do |photo, index|  %>
-      <% if photo.css_class.present? %>
-          <li class="<%= photo.css_class %>" >
-      <% else %>
-        <li>
-      <% end %>
-      <%= link_to (image_tag  photo.preview_link(:album), :width => Refinery::PhotoGallery.album_dimensions[0], :height => Refinery::PhotoGallery.album_dimensions[1]  ), photo.link_url, {
-                :target=> "_blank",
-                :class=>"fancybox",
-                :data =>{:title=> t('.image') + ' ' + (index + 1 ).to_s + '/' + photos_for_page.total_pages.to_s + ' ' + photo.title + '<br/><br/>' + photo.description},
-                :rel=>"group",
-                :title=> photo.title,
-                :alt => photo.title } %>
-      </li>
-  <% end %>
-</ul>
+  <ul id="gallery" class="clearfix">
+    <% photos_for_page.each_with_index do |photo, index|  %>
+        <% if photo.css_class.present? %>
+            <li class="<%= photo.css_class %>" >
+        <% else %>
+          <li>
+        <% end %>
+        <%= link_to (image_tag  photo.preview_link(:album), :width => Refinery::PhotoGallery.album_dimensions[0], :height => Refinery::PhotoGallery.album_dimensions[1]  ),
+                    photo.link_url, {
+                    :target => "_blank",
+                    :class  => "fancybox",
+                    :data   => {:title=> t('.image') + ' ' + (index + 1 ).to_s + '/' + photos_for_page.total_pages.to_s + ' ' + photo.title + '<br/><br/>' + photo.description},
+                    :rel    => "group",
+                    :title  => photo.title,
+                    :alt    => photo.title } %>
+        </li>
+    <% end %>
+  </ul>
 
-    <%= will_paginate photos_for_page %>
+  <%= will_paginate photos_for_page %>
 <% end %>

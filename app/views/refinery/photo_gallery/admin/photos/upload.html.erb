@@ -8,61 +8,61 @@
     <script type="text/javascript">
         <% session_key = Rails.application.config.session_options[:key] %>
         $(document).ready(function() {
-            $("#uploader").pluploadQueue({
+            // $("#uploader").pluploadQueue({
 
-                // General settings
-                runtimes : '<%= Refinery::PhotoGallery.runtimes %>',
-                url : '<%= refinery.photo_gallery_admin_photos_path %>',
-                max_file_size : '<%= Refinery::PhotoGallery.max_file_size %>',
-                multipart: true,
-                multipart_params: {
-                    '<%= session_key %>' : encodeURIComponent('<%=  cookies[session_key] %>'),
-                    'authenticity_token' : '<%= form_authenticity_token %>',
-                    'photo[album_id]' : "<%= @album.id %>"
-                },
-                multiple_queues: true,
-                rename: true,
+            //     // General settings
+            //     runtimes : '<%= Refinery::PhotoGallery.runtimes %>',
+            //     url : '<%= refinery.photo_gallery_admin_photos_path %>',
+            //     max_file_size : '<%= Refinery::PhotoGallery.max_file_size %>',
+            //     multipart: true,
+            //     multipart_params: {
+            //         '<%= session_key %>' : encodeURIComponent('<%=  cookies[session_key] %>'),
+            //         'authenticity_token' : '<%= form_authenticity_token %>',
+            //         'photo[album_id]' : "<%= @album.id %>"
+            //     },
+            //     multiple_queues: true,
+            //     rename: true,
 
-                // Resize images on clientside if we can
-                <% if Refinery::PhotoGallery.client_side_resize %>
-                resize : {width : <%= Refinery::PhotoGallery.client_side_resize_params[:width] %>,
-                    height : <%= Refinery::PhotoGallery.client_side_resize_params[:height] %>,
-                    quality : <%= Refinery::PhotoGallery.client_side_resize_params[:quality] %>},
-                <% end %>
+            //     // Resize images on clientside if we can
+            //     <% if Refinery::PhotoGallery.client_side_resize %>
+            //     resize : {width : <%= Refinery::PhotoGallery.client_side_resize_params[:width] %>,
+            //         height : <%= Refinery::PhotoGallery.client_side_resize_params[:height] %>,
+            //         quality : <%= Refinery::PhotoGallery.client_side_resize_params[:quality] %>},
+            //     <% end %>
 
-                // Post init events, bound after the internal events
-                init : {
-                    FileUploaded: function(up, file, info) {
-                       if (info.status == 500){
-                            alert(info.reponse);
-                        }
-                        else {
-                            $('form div#multiple_photo_edit').append(info.response).fadeIn('slow');
-                        }
-                    },
-                    //TODO this hiding/showing is ugly. Rework this.
-                    StateChanged: function(up) {
-                        // Called when the state of the queue is changed
-                        if (up.state == plupload.STARTED ){
-                            $('form div#upload_progress').show();
-                        }
-                        else if (up.state == plupload.STOPPED){
-                            $('form div#upload_progress').hide();
-                            $('form div#form_actions').fadeIn('slow');
-                        }
-                    }
-                }
-            });
+            //     // Post init events, bound after the internal events
+            //     init : {
+            //         FileUploaded: function(up, file, info) {
+            //            if (info.status == 500){
+            //                 alert(info.reponse);
+            //             }
+            //             else {
+            //                 $('form div#multiple_photo_edit').append(info.response).fadeIn('slow');
+            //             }
+            //         },
+            //         //TODO this hiding/showing is ugly. Rework this.
+            //         StateChanged: function(up) {
+            //             // Called when the state of the queue is changed
+            //             if (up.state == plupload.STARTED ){
+            //                 $('form div#upload_progress').show();
+            //             }
+            //             else if (up.state == plupload.STOPPED){
+            //                 $('form div#upload_progress').hide();
+            //                 $('form div#form_actions').fadeIn('slow');
+            //             }
+            //         }
+            //     }
+            // });
         })
     </script>
 <% end %>
 
-<form>
+<!-- <form>
   <div id="uploader">
     <p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
   </div>
   <br>
-</form>
+</form> -->
 
 <%= form_tag refinery.photo_gallery_admin_photos_path, id: 'single-photo-upload', multipart: true do %>
   <%= hidden_field_tag 'photo[album_id]', @album.id %>
@@ -89,7 +89,7 @@
   $(document).ready(function(){
     $("form#single-photo-upload").ajaxForm({
       success: function(response, status, xhr){
-        if (xhr.status != 500){
+        if (xhr.status != 200){
           alert(response);
         }
         else {
