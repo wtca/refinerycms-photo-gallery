@@ -17,6 +17,12 @@ module Refinery
       attr_accessible :album_id, :title, :description, :longitude, :latitude, :url, :css_class, :preview_type
       validates :title, :presence => true
       #TODO validate latitude/longitude - convert from nondecimal to decimal using inspiration from https://github.com/airblade/geo_tools/tree/master/lib/geo_tools
+      include Refinery::PhotoGallery::Validators
+
+      validates :file, :presence  => true
+      validates_with ImageSizeValidator
+      validates_property :mime_type, :of => :file, :in => ::Refinery::Images.whitelisted_mime_types,
+                         :message => :incorrect_format
 
       before_validation :set_title
       before_create :exif_read

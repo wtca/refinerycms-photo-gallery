@@ -33,10 +33,7 @@ module Refinery
       end
 
       config.before_initialize do
-        require 'carrierwave'
-        require 'carrierwave/orm/activerecord'
-        #require 'carrierwave/processing/mini_magick'
-        #require 'mime/types'
+        require 'mime/types'
         require 'mini_exiftool'
       end
 

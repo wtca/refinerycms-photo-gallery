@@ -87,6 +87,12 @@ en:
         index:
           no_collections: There are no collections yet
   activerecord:
+    errors:
+      models:
+        refinery/photo_gallery/photo:
+          blank: You must specify an image for upload
+          too_big: Image should be smaller than %{size} bytes in size
+          incorrect_format: 'Your image must be either a JPG, PNG or GIF'
     attributes:
       refinery/photo_gallery/photo_page:
         page_id: Page
@@ -111,3 +117,6 @@ en:
         file: File
     models:
       refinery/photo_gallery/collection: Album
+
+
+

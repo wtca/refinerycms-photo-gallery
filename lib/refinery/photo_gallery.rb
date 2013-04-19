@@ -1,12 +1,12 @@
 require 'refinerycms-core'
 require 'refinerycms-settings'
 
-
 module Refinery
   autoload :PhotoGalleryGenerator, 'generators/refinery/photo_gallery_generator'
 
   module PhotoGallery
     autoload :Version, 'refinery/photo_gallery/version'
+    autoload :Validators, 'refinery/photo_gallery/validators'
 
     class << self
       attr_writer :root
