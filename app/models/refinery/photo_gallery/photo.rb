@@ -1,9 +1,18 @@
+require 'dragonfly'
+
 module Refinery
   module PhotoGallery
     class Photo < ActiveRecord::Base
+      ::Refinery::PhotoGallery::Dragonfly.setup!
+
       belongs_to :album
 
-      mount_uploader :file, Refinery::PhotoGallery::Admin::FileUploader
+      file_accessor :file
+
+      acts_as_taggable_on :tags
+
+      attr_accessible :tag_list
+
       acts_as_indexed :fields => [:title, :description]
       attr_accessible :album_id, :title, :description, :longitude, :latitude, :url, :css_class, :preview_type
       validates :title, :presence => true

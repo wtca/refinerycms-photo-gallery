@@ -1,7 +1,7 @@
-<div id="photo-<%=  photo.id %>" class="form-photo-field">
+<div id="photo-<%= photo.id %>" class="form-photo-field">
   <%= fields_for "photos[photo]", photo, :index => photo.id do |p|%>
       <div class="form_photo_left">
-        <%= link_to (image_tag  photo.file.preview.url, :alt => photo.title), photo.file.single.url, {:target=> "_blank"} %>
+        <%= link_to (image_tag  photo.file.preview.url, :alt => photo.title), photo.file.single.url, {:target=> "_blank"} if photo.file.present? %>
       </div>
 
       <div class="form_photo_right">
@@ -13,6 +13,11 @@
         <div class='field'>
           <%= p.label :description %>
           <%= p.text_area :description, :rows => "5", :cols=> "57" %>
+        </div>
+
+        <div class='field'>
+          <%= p.label :tag_list, 'Tags (seperate by comma)' -%>
+          <%= p.text_field :tag_list, :class => 'larger' -%>
         </div>
 
         <% if Refinery::PhotoGallery.admin_photo_options_show_url %>
@@ -36,13 +41,15 @@
             </div>
         <% end %>
 
-        <div class='field-group'>
-            <%= p.label :longitude, :tooltip=> t('.use_decimal_format') %>
-            <%= p.text_field :longitude, :size=> 13 %>
+        <% if Refinery::PhotoGallery.admin_photo_options_show_lng_lat %>
+          <div class='field-group'>
+              <%= p.label :longitude, :tooltip=> t('.use_decimal_format') %>
+              <%= p.text_field :longitude, :size=> 13 %>
 
-            <%= p.label :latitude , :tooltip=> t('.use_decimal_format') %>
-            <%= p.text_field :latitude, :size=> 13  %>
-        </div>
+              <%= p.label :latitude , :tooltip=> t('.use_decimal_format') %>
+              <%= p.text_field :latitude, :size=> 13  %>
+          </div>
+        <% end %>
 
 
         <%= render :partial => "form_fields_actions", :locals => { :photo => photo } %>

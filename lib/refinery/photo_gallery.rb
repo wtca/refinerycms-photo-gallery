@@ -28,5 +28,6 @@ module Refinery
     require 'refinery/photo_gallery/configuration'
     require 'refinery/photo_gallery/extensions/pages_extension'
     require 'refinery/photo_gallery/extensions/pages_controller_extension'
+    require 'refinery/photo_gallery/dragonfly'
   end
 end

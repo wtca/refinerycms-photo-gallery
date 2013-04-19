@@ -11,6 +11,11 @@ module Refinery
         tab.partial = "/refinery/admin/pages/tabs/photo_gallery"
       end
 
+      initializer 'attach-refinery-photogallery-with-dragonfly', :after => 'attach-refinery-images-with-dragonfly' do |app|
+        ::Refinery::PhotoGallery::Dragonfly.configure!
+        ::Refinery::PhotoGallery::Dragonfly.attach!(app)
+      end
+
       initializer "init plugin" do
         Refinery::Plugin.register do |plugin|
           plugin.pathname = root
