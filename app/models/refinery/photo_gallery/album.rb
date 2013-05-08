@@ -6,12 +6,9 @@ module Refinery
       has_many :collections, :through => :collection_albums
 
 
-      before_validation :set_path
       validates :title, :presence => true
-      validates :path, :presence => true, :uniqueness => true
 
-      attr_accessor :path_prefix
-      attr_accessible :title, :description, :address, :note, :tags, :longitude, :latitude, :path, :path_prefix, :collection_ids
+      attr_accessible :title, :description, :address, :note, :tags, :longitude, :latitude, :collection_ids
       acts_as_indexed :fields => [:title, :description]
 
       self.per_page = Refinery::PhotoGallery.albums_per_page
@@ -35,24 +32,6 @@ module Refinery
         Refinery::PhotoGallery::CollectionAlbum.select('collection_id').where("album_id = ?", self.id ).map{|ca| ca.collection_id }
       end
 
-
-=begin # Prety url. Problems with :id
-      def to_param
-        "#{id}-#{title.parameterize}"
-      end
-=end
-      def set_path
-        #Replaces special characters in tile
-
-         if self.path_prefix.blank?  &&  self.path.blank?
-          self.path =  self.title.parameterize
-        elsif self.path.present? && self.title.present?
-          # dont't update path, when album has photos and we change title
-        else
-          self.path = [self.path_prefix, self.title.parameterize].join('-')
-        end
-
-      end
     end
   end
 end

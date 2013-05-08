@@ -5,6 +5,8 @@
                        :include_object_name => true
                } %>
 
+    <%= f.hidden_field :world_trade_center_id, value: f.object.world_trade_center_id || current_refinery_user.world_trade_center_id %>
+
     <div class='field'>
       <%= f.label :title -%>
       <%= f.text_field :title, :class => 'larger widest' -%>
