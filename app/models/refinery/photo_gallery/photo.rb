@@ -9,12 +9,14 @@ module Refinery
 
       file_accessor :file
 
+      geocoded_by :location
+
       acts_as_taggable_on :tags
 
       attr_accessible :tag_list
 
-      acts_as_indexed :fields => [:title, :description]
-      attr_accessible :album_id, :title, :description, :longitude, :latitude, :url, :css_class, :preview_type
+      acts_as_indexed :fields => [:title, :description, :location]
+      attr_accessible :album_id, :title, :description, :longitude, :latitude, :url, :css_class, :preview_type, :location
       validates :title, :presence => true
       #TODO validate latitude/longitude - convert from nondecimal to decimal using inspiration from https://github.com/airblade/geo_tools/tree/master/lib/geo_tools
       include Refinery::PhotoGallery::Validators
@@ -25,6 +27,7 @@ module Refinery
                          :message => :incorrect_format
 
       before_validation :set_title
+      after_validation :geocode
       before_create :exif_read
       #before_update :exif_write #TODO or use it after update?
       #TODO delete photo path from db? is it used?

@@ -18,7 +18,7 @@
       <%= label :collection, t('.album_belongs_to_collection')   %>
       <%= collection_select(:album, :collection_ids, Refinery::PhotoGallery::Collection.all(:order=> "title ASC"), :id, :title,
                             { },
-                            { :data => {:placeholder=> t('.choose_collection')}, :multiple=> true, :class=> "chzn-select", :style=>"width:400px;"}) %>
+                            { :data => {:placeholder => t('.choose_collection')}, :multiple => true, :class => "chzn-select", :style => "width:400px;"}) %>
     </div>
 
     <div class='field'>
@@ -32,27 +32,10 @@
 
     <div id="more_options" style="display: none;">
       <div class='field'>
-        <%= f.label :address %><br />
-        <%= f.text_area :address, { :rows => 3} %><br />
-      </div>
-
-      <div class='field'>
-        <%= f.label :latitude %><br />
-        <%= f.text_field :latitude %><br />
-      </div>
-
-      <div class='field'>
-        <%= f.label :longitude %><br />
-        <%= f.text_field :longitude %><br />
-      </div>
-
-
-      <div class='field'>
         <%= f.label :note %><br />
         <%= f.text_area :note, :cols=>65, :rows=> 7 %><br />
       </div>
     </div>
-
 
     <br />
     <%= t('.number_of_photos', :number=> album_photos_count ) %><br/>

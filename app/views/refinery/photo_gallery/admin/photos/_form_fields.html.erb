@@ -16,6 +16,11 @@
         </div>
 
         <div class='field'>
+          <%= p.label :location %>
+          <%= p.text_field :location %>
+        </div>
+
+        <div class='field'>
           <%= p.label :tag_list, 'Tags (seperate by comma)' -%>
           <%= p.text_field :tag_list, :class => 'larger' -%>
         </div>
@@ -40,17 +45,6 @@
               <%= p.text_field :preview_type, :class => "larger" %>
             </div>
         <% end %>
-
-        <% if Refinery::PhotoGallery.admin_photo_options_show_lng_lat %>
-          <div class='field-group'>
-              <%= p.label :longitude, :tooltip=> t('.use_decimal_format') %>
-              <%= p.text_field :longitude, :size=> 13 %>
-
-              <%= p.label :latitude , :tooltip=> t('.use_decimal_format') %>
-              <%= p.text_field :latitude, :size=> 13  %>
-          </div>
-        <% end %>
-
 
         <%= render :partial => "form_fields_actions", :locals => { :photo => photo } %>
       </div>
