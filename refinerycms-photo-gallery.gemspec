@@ -18,11 +18,14 @@ Gem::Specification.new do |s|
   s.test_files        = `git ls-files -- spec/*`.split("\n")
 
   # Runtime dependencies
-  s.add_dependency    'refinerycms-core',     '~> 2.0.3'
-  s.add_dependency    'refinerycms-settings', '~> 2.0.1'
+  s.add_dependency    'refinerycms-core',     '~> 2.0.10'
+  s.add_dependency    'refinerycms-settings', '~> 2.0.2'
+  s.add_dependency    'refinerycms-i18n',     '~> 2.0.0'
   s.add_dependency    'mime-types'
   s.add_dependency    'mini_exiftool'
+  s.add_dependency    'geocoder',             '~> 1.1.8'
+  s.add_dependency    'acts-as-taggable-on',  '~> 2.3.1'
 
   # Development dependencies
-  s.add_development_dependency 'refinerycms-testing', '~> 2.0.0'
+  s.add_development_dependency 'refinerycms-testing', '~> 2.0.10'
 end

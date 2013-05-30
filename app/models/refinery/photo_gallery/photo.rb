@@ -9,13 +9,11 @@ module Refinery
 
       file_accessor :file
 
-      geocoded_by :location
-
-      acts_as_taggable_on :tags
+      geocoded_by(:location) rescue nil
+      acts_as_taggable_on(:tags) rescue nil
+      acts_as_indexed :fields => [:title, :description, :location]
 
       attr_accessible :tag_list
-
-      acts_as_indexed :fields => [:title, :description, :location]
       attr_accessible :album_id, :title, :description, :longitude, :latitude, :url, :css_class, :preview_type, :location
       validates :title, :presence => true
       #TODO validate latitude/longitude - convert from nondecimal to decimal using inspiration from https://github.com/airblade/geo_tools/tree/master/lib/geo_tools

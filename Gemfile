@@ -1,8 +1,12 @@
 source 'http://rubygems.org'
 
+gem 'refinerycms-i18n',    '~> 2.0.0'
+
 gemspec
 
-gem 'refinerycms', '~> 2.0.3'
+gem 'refinerycms',         '~> 2.0.10'
+gem 'refinerycms-testing', '~> 2.0.10'
+
 
 #loading from gemspec
 
@@ -24,3 +28,20 @@ gem 'refinerycms', '~> 2.0.3'
 # -- EXIF
 # Mini exif tool. Can be disabled. Remove exif_read and exif_write filters in photo model
 #gem "mini_exiftool"
+
+group :development, :test do
+  gem 'debugger',            '~> 1.5.0'
+  gem 'rspec-rails',         '~> 2.13.0'
+  gem 'sqlite3',             '~> 1.3.7'
+  gem 'faker',               '~> 1.1.2'
+end
+
+group :test do
+  # gem 'capybara',            '~> 2.1.0'
+  gem 'chromedriver-helper', '~> 0.0.5'
+  gem 'database_cleaner'
+  gem 'launchy',             '~> 2.3.0'
+  gem 'rspec-instafail',     '~> 0.2.4'
+  gem 'selenium-webdriver',  '~> 2.32.1'
+  gem 'shoulda-matchers',    '~> 2.1.0'
+end
