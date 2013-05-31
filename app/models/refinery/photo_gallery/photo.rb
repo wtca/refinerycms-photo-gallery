@@ -9,12 +9,11 @@ module Refinery
 
       file_accessor :file
 
-      geocoded_by(:location) rescue nil
-      acts_as_taggable_on(:tags) rescue nil
-      acts_as_indexed :fields => [:title, :description, :location]
+      acts_as_taggable_on(:tags)
+      acts_as_indexed :fields => [:title, :description]
 
       attr_accessible :tag_list
-      attr_accessible :album_id, :title, :description, :longitude, :latitude, :url, :css_class, :preview_type, :location
+      attr_accessible :album_id, :title, :description, :longitude, :latitude, :url, :css_class, :preview_type
       validates :title, :presence => true
       #TODO validate latitude/longitude - convert from nondecimal to decimal using inspiration from https://github.com/airblade/geo_tools/tree/master/lib/geo_tools
       include Refinery::PhotoGallery::Validators
@@ -25,7 +24,7 @@ module Refinery
                          :message => :incorrect_format
 
       before_validation :set_title
-      after_validation :geocode
+      # after_validation :geocode
       before_create :exif_read
       #before_update :exif_write #TODO or use it after update?
       #TODO delete photo path from db? is it used?
@@ -52,7 +51,8 @@ module Refinery
       private
 
       def set_title
-        self.title = self.file.file.basename.titleize unless self.title
+        return if title || self.file.nil?
+        self.title = self.file.basename.titleize
       end
 
       def exif_read

@@ -1,30 +1,52 @@
 require 'spec_helper'
 
 describe Refinery::PhotoGallery::Photo do
+  # Associations
   it { should belong_to(:album) }
 
+  # Validations
+  it { should validate_presence_of(:title) }
+
+  describe '#set_title' do
+    it "should set the title based on the filename if title not given" do
+      photo = create(:photo, title: nil)
+      expect(photo.title).to eq('Default Avatar')
+    end
+
+    it "should use provided title if given" do
+      photo = create(:photo, title: 'Special Photo')
+      expect(photo.title).to eq('Special Photo')
+    end
+  end
+
   # Class Extensions
-  describe '#file' do
+  describe '#file_accessor :file' do
     it "should allow file attachments" do
-      pending
       photo = create(:photo)
       expect(photo).to be_persisted
-      expect(photo.attachment).to be_a(Dragonfly::ActiveModelExtensions::Attachment)
+      expect(photo.file).to be_a(Dragonfly::ActiveModelExtensions::Attachment)
+    end
+  end
+
+  describe 'acts_as_taggable_on :tags' do
+    it "should be taggable" do
+      photo = create(:photo, :tag_list => "one, two, three")
+      expect(photo.tags.size).to be 3
+    end
+  end
+
+  # Configuration
+  describe '#per_page' do
+    it "should set value based on value of photos_per_page config option set during initialization" do
+      # Refinery::PhotoGallery.photos_per_page
+      expect(Refinery::PhotoGallery.photos_per_page).to eq(10)
     end
   end
 end
 
-#       file_accessor :file
+#       acts_as_indexed :fields => [:title, :description]
+#       attr_accessible :album_id, :title, :description, :longitude, :latitude, :url, :css_class, :preview_type
 
-#       geocoded_by :location
-
-#       acts_as_taggable_on :tags
-
-#       attr_accessible :tag_list
-
-#       acts_as_indexed :fields => [:title, :description, :location]
-#       attr_accessible :album_id, :title, :description, :longitude, :latitude, :url, :css_class, :preview_type, :location
-#       validates :title, :presence => true
 #       #TODO validate latitude/longitude - convert from nondecimal to decimal using inspiration from https://github.com/airblade/geo_tools/tree/master/lib/geo_tools
 #       include Refinery::PhotoGallery::Validators
 
@@ -33,13 +55,10 @@ end
 #       validates_property :mime_type, :of => :file, :in => ::Refinery::Images.whitelisted_mime_types,
 #                          :message => :incorrect_format
 
-#       before_validation :set_title
-#       after_validation :geocode
+
 #       before_create :exif_read
 #       #before_update :exif_write #TODO or use it after update?
 #       #TODO delete photo path from db? is it used?
-
-#       self.per_page = Refinery::PhotoGallery.photos_per_page
 
 #       def to_param
 #         "#{id}-#{title.parameterize}"

@@ -6,6 +6,7 @@ gemspec
 
 gem 'refinerycms',         '~> 2.0.10'
 gem 'refinerycms-testing', '~> 2.0.10'
+gem 'acts-as-taggable-on',  '~> 2.3.1'
 
 
 #loading from gemspec
